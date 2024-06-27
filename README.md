@@ -14,5 +14,10 @@ This project sets up a multinode Rocket.Chat server with a MongoDB database and 
    git clone https://github.com/SaadatiReza/MultiNode-RocketChat.git
    cd MultiNode-RocketChat
    
-2.  **Create and configure the .env file:**
-Copy the provided .env.example to .env and adjust the values as needed.
+2. **Create and configure the .env file:**
+   Copy the provided .env.example to .env and adjust the values as needed.
+   ```sh
+   cp .env-simple .env
+
+3. **Open the .env file and change the variable if needed.**
+   
