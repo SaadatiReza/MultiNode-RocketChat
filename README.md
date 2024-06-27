@@ -37,3 +37,4 @@ This project sets up a multinode Rocket.Chat server with a MongoDB database and 
 4. **Run the services:**
    ```sh
    docker compose up -d
+
