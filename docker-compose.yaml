@@ -1,8 +1,8 @@
-#version: '3'
+version: '3'
 
 services:
   traefik:
-    image: traefik:v2.2
+    image: ${TRAEFIK_IMAGE}
     command:
       - "--api.insecure=true"
       - "--providers.docker=true"
@@ -19,36 +19,34 @@ services:
       - web
 
   rocketchat:
-    image: rocket.chat:latest
+    image: ${ROCKETCHAT_IMAGE}
     environment:
       - MONGO_URL=mongodb://mongo:27017/rocketchat
       - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-      - ROOT_URL=example.com
+      - ROOT_URL=http://${ROOT_URL}
       - PORT=3000
       - OVERWRITE_SETTING_Accounts_RegistrationForm=Disabled
       - OVERWRITE_SETTING_Log_Level=2
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.rocketchat.rule=Host(`example.com`)"
+      - "traefik.http.routers.rocketchat.rule=Host(`${ROOT_URL}`)"
       - "traefik.http.services.rocketchat.loadbalancer.server.port=3000"
-      #- "traefik.http.services.rocketchat.loadbalancer.sticky.cookie=true"
-        #      - "traefik.http.routers.rocketchat.entrypoints=websecure"
     networks:
       - web
     deploy:
-      replicas: 5
+      replicas: ${ROCKET_REPLICAS}
     depends_on:
       - mongo
 
   mongo:
-    image: mongo:latest
+    image: ${MONGO_IMAGE}
     volumes:
-      - ./data/db:/data/db
+      - mongo-data:/data/db
     networks:
       - web
 
   mongo-init-replica:
-    image: mongo:latest
+    image: ${MONGO_IMAGE}
     command: "mongo --eval 'rs.initiate({_id: \"rs0\", members: [{_id: 0, host: \"localhost:27017\"}]})'"
     depends_on:
       - mongo
@@ -58,3 +56,6 @@ services:
 networks:
   web:
     #external: true
+
+volumes:
+  mongo-data:
