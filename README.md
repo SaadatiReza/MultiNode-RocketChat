@@ -20,7 +20,7 @@ This project sets up a multinode Rocket.Chat server with a MongoDB database and 
    cp .env-simple .env
 
 3. **Open the .env file and change the variable if needed:**
-   Environment Variables:
+   **Environment Variables**:
    Key attributes brought into the .env file include:
    
    * TRAEFIK_IMAGE: The Traefik image to use.
