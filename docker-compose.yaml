@@ -23,7 +23,7 @@ services:
     environment:
       - MONGO_URL=mongodb://mongo:27017/rocketchat
       - MONGO_OPLOG_URL=mongodb://mongo:27017/local
-      - ROOT_URL=${ROOT_URL}
+      - ROOT_URL=http://${ROOT_URL}
       - PORT=3000
       - OVERWRITE_SETTING_Accounts_RegistrationForm=Disabled
       - OVERWRITE_SETTING_Log_Level=2
