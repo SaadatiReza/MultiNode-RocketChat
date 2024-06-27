@@ -34,7 +34,7 @@ services:
     networks:
       - web
     deploy:
-      replicas: 5
+      replicas: ${ROCKET_REPLICAS}
     depends_on:
       - mongo
 
