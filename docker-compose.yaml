@@ -15,7 +15,7 @@ services:
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
     networks:
-      - ${NETWORK_NAME}
+      - webrocketchat
 
   rocketchat:
     image: ${ROCKETCHAT_IMAGE}
@@ -31,7 +31,7 @@ services:
       - "traefik.http.routers.rocketchat.rule=Host(`${ROOT_URL}`)"
       - "traefik.http.services.rocketchat.loadbalancer.server.port=${ROCKETCHAT_PORT}"
     networks:
-      - ${NETWORK_NAME}
+      - webrocketchat
     deploy:
       replicas: ${ROCKET_REPLICAS}
     depends_on:
@@ -42,7 +42,7 @@ services:
     volumes:
       - mongo-data:/data/db
     networks:
-      - ${NETWORK_NAME}
+      - webrocketchat
 
   mongo-init-replica:
     image: ${MONGO_IMAGE}
@@ -50,10 +50,10 @@ services:
     depends_on:
       - mongo
     networks:
-      - ${NETWORK_NAME}
+      - webrocketchat
 
 networks:
-  ${NETWORK_NAME}:
+  webrocketchat:
     driver: bridge
 
 volumes:
